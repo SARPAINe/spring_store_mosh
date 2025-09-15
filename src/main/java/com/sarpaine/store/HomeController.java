@@ -11,11 +11,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String index(){
-        System.out.println("Welcome to app: " + appName);
-        return getViewName();
-    }
-
-    private String getViewName(){
-        return "index.html";
+        return "index.html";  
     }
 }
