@@ -10,6 +10,7 @@ public class OrderRequest {
     
     private String customerEmail;
     private String productName;
+    private String paymentMethod; // "stripe" or "paypal", defaults to "stripe"
 
     // Default constructor
     public OrderRequest() {}
@@ -19,6 +20,15 @@ public class OrderRequest {
         this.amount = amount;
         this.customerEmail = customerEmail;
         this.productName = productName;
+        this.paymentMethod = "stripe"; // default
+    }
+
+    // Constructor with payment method
+    public OrderRequest(Double amount, String customerEmail, String productName, String paymentMethod) {
+        this.amount = amount;
+        this.customerEmail = customerEmail;
+        this.productName = productName;
+        this.paymentMethod = paymentMethod;
     }
 
     // Getters and setters
@@ -44,5 +54,13 @@ public class OrderRequest {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 }

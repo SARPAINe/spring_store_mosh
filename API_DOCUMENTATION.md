@@ -28,7 +28,7 @@ Order service is running
 
 **POST** `/orders`
 
-Place a new order with payment processing.
+Place a new order with payment processing using your preferred payment method.
 
 **Request Body:**
 
@@ -36,7 +36,8 @@ Place a new order with payment processing.
 {
   "amount": 50.0,
   "customerEmail": "customer@example.com",
-  "productName": "Test Product"
+  "productName": "Test Product",
+  "paymentMethod": "stripe"
 }
 ```
 
@@ -45,6 +46,12 @@ Place a new order with payment processing.
 - `amount`: Required, must be greater than 0
 - `customerEmail`: Optional
 - `productName`: Optional
+- `paymentMethod`: Optional, accepts "stripe" or "paypal" (defaults to "stripe")
+
+**Payment Method Differences:**
+
+- **Stripe**: Maximum limit $10,000, faster processing, lower failure rate (10%)
+- **PayPal**: Maximum limit $5,000, slower processing, higher failure rate (15%), includes buyer protection
 
 **Success Response (201 Created):**
 
@@ -94,7 +101,7 @@ Place a new order with payment processing.
 curl -X GET http://localhost:8080/api/orders/health
 ```
 
-2. **Place Order:**
+2. **Place Order with Stripe (default):**
 
 ```bash
 curl -X POST http://localhost:8080/api/orders \
@@ -102,11 +109,25 @@ curl -X POST http://localhost:8080/api/orders \
   -d '{
     "amount": 50.0,
     "customerEmail": "customer@example.com",
-    "productName": "Test Product"
+    "productName": "Test Product",
+    "paymentMethod": "stripe"
   }'
 ```
 
-3. **Test Validation:**
+3. **Place Order with PayPal:**
+
+```bash
+curl -X POST http://localhost:8080/api/orders \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": 150.0,
+    "customerEmail": "paypal-user@example.com",
+    "productName": "PayPal Product",
+    "paymentMethod": "paypal"
+  }'
+```
+
+4. **Test Validation:**
 
 ```bash
 curl -X POST http://localhost:8080/api/orders \
